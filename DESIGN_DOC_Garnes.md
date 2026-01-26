@@ -1,20 +1,23 @@
-# Network Design Project – Phase Proposal & Design Document (Phase __ of 5)
+# Network Design Project – Phase Proposal & Design Document (Phase 1 of 5)
 
 > **Purpose:** This document is your team’s *proposal* for how you will implement the current phase **before** you start coding.  
 > Keep it clear, concrete, and lightweight.
 
-**Team Name:**  
-**Members:** (Name, email)  
-**GitHub Repo URL (with GitHub usernames):**  
-**Phase:** (1 / 2 / 3 / 4 / 5)  
-**Submission Date:**  
-**Version:** (v1 / resubmission v2 / etc.)
+**Team Name:** Virtual team  
+**Members:** Zach Garnes, zachary_garnes@student.uml.edu, Lucas Lomba, Lucas_Lomba@student.uml.edu, Jonathan Rubio, Jonathan_Rubio@student.uml.edu   
+**GitHub Repo URL (with GitHub usernames):** https://github.com/zgarnes-uml/Garnes_Phase1.git (zgarnes-uml)  
+**Phase:** 1  
+**Submission Date:** 1/26/2026  
+**Version:** v1
 
 ---
 
 ## 0) Executive summary
-In **5–8 sentences**, describe what you are adding/creating in *this* phase, what “done” means, and how you’ll validate it (demo + tests + figures).
-
+In Phase 1, the goal is to introduce everyone to python, git, and the fundamentals of networking. 
+In part one, the goal is to implement the standard user datagram protocol (UDP) sockets by creating a UDP server and client to send the text "Hello".
+The client will send the text "Hello", once received the server will echo the same text by sending it back to the client. 
+In part two, the goal is to implement RDT 1.0 protocol to transferring a file from the UDP client to the UDP server. 
+This will be done by each team member individually.  
 ---
 
 ## 1) Phase requirements
@@ -28,81 +31,51 @@ You will submit a **screen recording** demonstrating the required scenarios.
 ### 1.2 Required demo scenarios
 Fill in the scenarios required by the phase spec.
 
-| Scenario | What you will inject / configure | Expected observable behavior | What we will see in the video |
-|---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
+| Scenario | What you will inject / configure       | Expected observable behavior                                                                                                                                                                                                                                                         | What we will see in the video                                                                                                                                                                                                                                                                                                                                                                                                           |
+|---|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 | Run UDP server and client python code  | Server client will wait for message from client, client will send "hello",server will receive message and send it back to client                                                                                                                                                     | Two terminal windows, one that is the server and one that is the client. Client window will send the text "hello". Server window will receive "hello" and then send the text back to the client. Client window will say hello.                                                                                                                                                                                                          |
+| 2 | Run UDP server and client python code                                        | Server client will wait for file from client, client will take the transfer file (an image)  and break it up into packets, client will send packets one by one,server will receive packets one at a time and create a new file that will be the same image as what was transferred.  | Two terminal windows, one that is the server and one that is the client. Client window will use a .bmp file in the folder of the project and break it up into packets to send to the server. Server window will receive the packets, saving them into a new .bmp file. The new file will be the same image and the image in the file that was already existing in the folder, showing the data was sent from the client to the server.  |
 
-### 1.3 Required figures / plots
-Fill in the figures/plots required by the phase spec (if none, write “N/A”).
 
-| Figure/Plot | X-axis | Y-axis | Sweep range + step | Data source (CSV/log) | Output filename |
-|---|---|---|---|---|---|
-| 1 |  |  |  |  |  |
-| 2 |  |  |  |  |  |
 
 ---
 
 ## 2) Phase plan (company-style, lightweight)
-Think of this as a short “implementation proposal” you’d write at a company.
-
 ### 2.1 Scope: what changes/additions this phase
-- **New behaviors added:**
-- **Behaviors unchanged from previous phase:**
-- **Out of scope (explicitly):**
+- **New behaviors added:** UDP server and client to send text. UDP server and client to send files.
+- **Behaviors unchanged from previous phase:** N/A
+- **Out of scope (explicitly):** N/A
 
 ### 2.2 Acceptance criteria (your checklist)
 List 5–10 measurable checks that mean you’re done (examples below).
 
-- [ ] Sender/receiver run with standard CLI flags
+- [ ] Sender/receiver run echoing the text correctly
 - [ ] All required scenarios demonstrated in the video
 - [ ] Output file matches input file (byte-for-byte)
-- [ ] Figures/plots generated and saved under `results/`
-- [ ] Re-run is reproducible using the same seed
+- [ ] Image is recreate correctly
+- [ ] Being able to send the same file multiple times 
 
-### 2.3 Work breakdown (high-level; Person X will work on A, Person Y will work on B...)
-- Workstream A:
-- Workstream B:
-- Workstream C:
 
 ---
 
 ## 3) Architecture + state diagrams
-Your phase specs likely include a reference state diagram. **You should build on it across phases.**
+The architecture for part 2 will follow the RDT 1.0 protocol described in Section 3.4.1 of the course textbook. See below image.
 
 ### 3.1 How to evolve the provided state diagram
-For each phase:
-1. **Start from the current phase diagram** (sender + receiver).
-2. **Mark specifics**:
-   - new states,
-   - new transitions,
-   - updated transition conditions (timeouts, corruption checks, window slide rules).
-3. Keep both:
-   - **“Previous phase diagram”** (for comparison) and
-   - **“Current phase diagram”** (what you will implement in more detail).
 
-> Tip: In your PDF submission, include diagrams as images. In Markdown, you can include ASCII diagrams or link to images in `docs/figures/`.
-
+![image](C:\Users\Zach\GitProjects\Garnes_Phase1\figures\state diagram.PNG)
 ### 3.2 Component responsibilities
 - **Sender**
-  - responsibilities:
+  - responsibilities: take file, break it up into packets, send to server.
 - **Receiver**
-  - responsibilities:
-- **Shared modules/utilities**
-  - packet encode/decode:
-  - checksum:
-  - logging/timing:
-  - CLI/config parsing:
+  - responsibilities: wait for packets, assemble all packets into a new file, save file.
+
 
 ### 3.3 Message flow overview
-Add a simple diagram (box + arrows is fine, you're also welcome to use software with screenshots).
 
-Example:
 ```
-[file] -> Sender -> UDP -> Receiver -> [output file]
-              ^             |
-              |---- ACK ----|
+[image] -> Sender -> UDP -> Receiver -> [output image]
+           
 ```
 
 ---
@@ -120,14 +93,12 @@ List the packet types you will send:
 **What this means:** you must specify the *exact* fields in each packet header and their meaning.  
 This ensures everyone can encode/decode packets consistently.
 
-| Field | Size (bytes/bits) | Type | Description | Notes |
-|---|---:|---|---|---|
-| type |  |  | data vs ack |  |
-| seq |  |  | sequence number |  |
-| ack |  |  | ack number / flag |  |
-| len |  |  | payload length | last packet may be smaller |
-| checksum |  |  | checksum value | what it covers (header/payload) |
-| payload | ≤ ~1024B | bytes | file chunk | binary-safe |
+| Field   | Size (bytes/bits) | Type                | Description             | Notes |
+|---------|------------------:|---------------------|-------------------------|---|
+| seq     |                 4 | Unsigned 32-bit integer | sequence number         |  |
+| len     |                 4 |        Unsigned 32-bit integer             | payload length          | last packet may be smaller |
+| total   |                 4 |         Unsigned 32-bit integer            | total number of packets |  |
+| payload |          ≤ ~1024B | bytes               | file chunk              | binary-safe |
 
 ---
 
@@ -135,37 +106,17 @@ This ensures everyone can encode/decode packets consistently.
 This section prevents “random globals everywhere” and helps keep code maintainable.
 
 ### 5.1 Key data structures
-List the core structures you will store in memory.
+List the core structures you will store in memory
 
-Examples:
-- sender window buffer:
-- receiver buffer (out-of-order):
-- retransmission timer state:
-- metrics collection structure (for plots):
+Server IP
 
-For each structure, document:
-- fields
-- invariants (what must always be true)
-- where it lives (module/file)
+Server port 
 
-### 5.2 Module map + dependencies
-Show how modules connect.
+Client IP
 
-Minimum expected modules (names may vary):
-- `src/sender.*`
-- `src/receiver.*`
-- `src/packet.*` (encode/decode)
-- `src/checksum.*`
-- `scripts/run_experiments.*` (if applicable)
-- `scripts/plot_results.*` (if applicable)
+Client Port
 
-Provide a simple dependency sketch:
-
-```
-sender -> packet, checksum, utils
-receiver -> packet, checksum, utils
-scripts -> sender/receiver CLI, results CSV, plotting
-```
+Payload size
 
 ---
 
@@ -175,7 +126,6 @@ This section is your “engineering spec” that you implement against. Keep it 
 ### 6.1 Sender behavior
 Describe behavior as steps or a state machine:
 - when packets are sent
-- when ACKs are processed
 - retransmission rules
 - termination conditions
 - (if applicable) window advance rules
@@ -185,10 +135,9 @@ Describe behavior as steps or a state machine:
 initialize state
 while not done:
   send/queue packets according to phase rules
-  wait for ACK/event
   if ACK received:
-    validate (checksum/seq)
-    update state (advance, ignore duplicate, etc.)
+    validate (seq)
+    update state (advance)
   if timeout/event:
     retransmit according to phase rules
 ```
@@ -196,7 +145,6 @@ while not done:
 ### 6.2 Receiver behavior
 Describe receiver rules:
 - accept/discard conditions
-- ACK rules
 - duplicate/out-of-order handling
 - file write rules (safe and deterministic)
 
@@ -204,67 +152,15 @@ Describe receiver rules:
 ```text
 on packet receive:
   if corrupt: discard; respond according to phase rules
-  else if expected: accept; write/buffer; ACK
+  else if expected: accept; write/buffer
   else: handle duplicate/out-of-order according to phase rules
 ```
 
-### 6.3 Error/loss injection spec (if required by phase)
-If the phase requires injection, state:
-- where injection occurs in the pipeline (exact point)
-- probability model and RNG seed usage
-- what is injected (bit flip vs drop)
-- how you ensure repeatability
+
 
 ---
 
-## 7) Experiments + metrics plan (required if phase requires figures/plots)
-### 7.1 Measurement definition
-Define completion time precisely:
-- start moment:
-- stop moment:
-
-State how you will avoid measurement distortion:
-- disable verbose printing/logging during timing runs
-- run multiple trials if required
-
-### 7.2 Output artifacts
-- CSV schema (columns):
-- plot filenames:
-- where outputs are stored (`results/`):
-
----
-
-## 8) Edge cases + test plan
-This replaces “risks” with what actually matters for correctness.
-
-### 8.1 Edge cases you expect
-List the top edge cases you will explicitly test.
-
-| Edge case | Why it matters | Expected behavior |
-|---|---|---|
-| last packet smaller than payload size | correct file reconstruction | receiver writes exact bytes |
-| duplicate packets/ACKs | protocol correctness | ignored or re-ACKed |
-| corrupted header | checksum coverage | drop / request retransmit |
-| termination marker handling | clean shutdown | no deadlocks |
-
-### 8.2 Tests you will write because of these edge cases
-List concrete tests (unit/integration) that map to the edge cases.
-
-- Unit tests (examples):
-  - checksum correctness on known inputs
-  - packet encode/decode round-trip
-- Integration tests (examples):
-  - send file and verify output hash matches input
-  - run scenario injection and confirm behavior
-
-### 8.3 Test artifacts
-State what artifacts you will produce:
-- console logs (minimal)
-- where tests live (`tests/` optional, or `scripts/`)
-
----
-
-## 9) Repo structure + reproducibility
+## 7) Repo structure + reproducibility
 Your repo must contain at minimum:
 
 ```
@@ -276,27 +172,17 @@ README.md
 ```
 
 State where phase artifacts live:
-- Design docs: `docs/`
-- Figures/plots + CSV: `results/`
-- Any helper scripts: `scripts/`
+- Design docs: `docs/` udp_client.py, udp_server.py, rdt1_client.py, rdt1_server.py
+- Figures/plots + CSV: `results/` image.bmp, received.bmp, state diagram.PNG
+
 
 ---
 
 ## 10) Team plan, ownership, and milestones
-### 10.1 Task ownership
-| Task | Owner | Target date | Definition of done |
-|---|---|---|---|
-| Packet format + encode/decode |  |  |  |
-| Sender logic |  |  |  |
-| Receiver logic |  |  |  |
-| Injection (if required) |  |  |  |
-| Figures/plots (if required) |  |  |  |
-| README + reproducibility |  |  |  |
 
 ### 10.2 Milestones (keep it realistic)
-- Milestone 1:
-- Milestone 2:
-- Milestone 3:
+- Milestone 1: Completed the whole phase 1/30/2026
+
 
 ---
 
