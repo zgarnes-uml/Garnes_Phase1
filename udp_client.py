@@ -4,9 +4,9 @@
 
 import socket # Import the socket module to enable network communication
 SERVER_IP = "127.0.0.1" # IP address of the UDP server, localhost
-SERVER_PORT = 12011 # Port number of the UDP server
+SERVER_PORT = 12025 # Port number of the UDP server
 CLIENT_IP = "127.0.0.1" # Client IP address, localhost same as UDP server
-CLIENT_PORT = 12010 # Client port number, different from server
+CLIENT_PORT = 12026 # Client port number, different from server
 
 
 def main():
