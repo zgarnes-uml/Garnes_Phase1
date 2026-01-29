@@ -1,4 +1,4 @@
-# Network Design Project – Team ____
+# Network Design Project – Team Virtual (Temp Team Name)
 
 <!-- Optional: add badges if you want -->
 <!-- ![language](https://img.shields.io/badge/language-python-blue) -->
@@ -8,15 +8,14 @@ This repository implements a UDP/TCP-based file transfer protocol across **6 pha
 mechanisms and performance evaluation.
 
 ## Team
-| Name | Email | Primary responsibility |
-|---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| Name           | Email | Primary responsibility                              |
+|----------------|---|-----------------------------------------------------|
+| Zachary Garnes | Zachary_Garnes@student.uml.edu | The whole programming phase (individual submission) |
+
 
 ## Demo Video (submission)
-- **Private YouTube link:** *(submit via Blackboard)*  
-- **Timestamped outline:** *(mm:ss → scenario)*
+- **Private YouTube link:** *https://youtu.be/NAMY4LYGDao*  
+- **Timestamped outline:** *(00:00 → Phase1(a), 00:23 → Phase1(b))*
 
 ---
 
@@ -30,13 +29,6 @@ docs/       # design documents and diagrams
 results/    # CSV + plots generated from experiments
 README.md
 ```
-
-Optional (recommended):
-- `tests/`
-- `data/`
-- `requirements.txt` (Python)
-
----
 
 ## Requirements
 - Language/runtime: (Python 3.x)
@@ -94,41 +86,43 @@ python src/sender.py --host 127.0.0.1 --port 9000 --file data/sample.jpg --seed 
 ## Required Demo Scenarios (Current Phase)
 Provide the exact commands used to demonstrate each required scenario.
 
-### Scenario 1: __________
-Receiver:
+### Scenario 1: Send a message (for example, “HELLO”) from the UDP client to the UDP server.
+Echo the message back from the UDP server to the UDP client.
+Receiver: Start
 ```bash
-...
+python udp_server.py
 ```
 Sender:
 ```bash
-...
+python udp_client.py
 ```
 Expected behavior:
-- ...
+- Client sends the text to server, server receives message and send it back to client. 
 
-### Scenario 2: __________
-...
+### Scenario 2: Transfer a file (for example, a BMP) between a UDP client process and a UDP server process.
+```bash
+python rdt1_server.py
+```
+Sender:
+```bash
+python rdt1_client.py
+```
+Expected behavior:
+- Client takes .bmp file, breaks it up into packets, sends packets one-by-one to server, server stores all packets data, creates new .bmp from received data, should be the same file that was sent.  
 
 ---
 
 ## Figures / Plots (if required by phase)
 ### Reproduce experiment runs
-Your repo must include a script that can reproduce required sweeps and output CSV.
+Output file of the received .bmp by the server
 
 Example:
 ```bash
-python scripts/run_experiments.py --phase 4 --out results/phase4.csv
-```
-
-### Generate plots
-Example:
-```bash
-python scripts/plot_results.py --in results/phase4.csv --out results/phase4.png
+recieved.bmp
 ```
 
 ### Results files
-- `results/phaseX.csv`
-- `results/phaseX.png`
+recieved.bmp
 
 ---
 
@@ -138,4 +132,4 @@ List any limitations honestly.
 ---
 
 ## Academic Integrity / External Tools
-Debugging tools (IDE debugger, logging) and LLMs may be used for learning and troubleshooting. Final implementation decisions and understanding are our own.
+Included packet send print statements to see if any packets were lost 
